@@ -1,18 +1,26 @@
-import { contextBridge } from 'electron'
+/* eslint-disable promise/prefer-await-to-callbacks */
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
-// Custom APIs for renderer
-const api = {}
+import { SensorData } from '../main/serial'
 
-// Use `contextBridge` APIs to expose Electron APIs to
-// renderer only if context isolation is enabled, otherwise
-// just add to the DOM global.
+const api = {
+  getSensorData: async () => {
+    const data = (await ipcRenderer.invoke('getSensorData')) as SensorData
+    return data
+  },
+  onReceiveSensorData: (callback: (data: SensorData) => void) => {
+    ipcRenderer.on('receiveSensorData', (_, data: SensorData) => {
+      callback(data)
+    })
+  },
+}
+
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld('api', api)
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error(error)
   }
 } else {

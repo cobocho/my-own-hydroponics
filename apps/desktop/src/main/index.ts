@@ -2,12 +2,12 @@
 /* eslint-disable promise/catch-or-return */
 import { join } from 'path'
 
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import { SerialPort } from 'serialport'
-import { ReadlineParser } from '@serialport/parser-readline'
 
 import icon from '../../resources/icon.png?asset'
+
+import { globalStore, openSerialPort } from './serial'
 
 function createWindow(): void {
   // Create the browser window.
@@ -32,29 +32,9 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
-  const port = new SerialPort({
-    path: '/dev/tty.SLAB_USBtoUART',
-    baudRate: 115200,
-  })
-
-  const parser = port.pipe(new ReadlineParser({ delimiter: '\n' }))
-
-  port.on('open', () => {
-    console.log('open')
-  })
-
-  parser.on('data', (data: string) => {
-    try {
-      const json = JSON.parse(data) as {
-        temperature: number
-        humidity: number
-        light: number
-        water: number
-      }
-      console.log(json)
-    } catch (error) {
-      console.error(error)
-    }
+  openSerialPort((data) => {
+    globalStore.setSensorData(data)
+    mainWindow.webContents.send('receiveSensorData', data)
   })
 
   if (is.dev && process.env.ELECTRON_RENDERER_URL) {
@@ -70,9 +50,6 @@ app.whenReady().then(() => {
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
-
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
 
   createWindow()
 

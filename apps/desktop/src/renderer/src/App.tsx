@@ -1,22 +1,22 @@
-function App(): React.JSX.Element {
+import { useEffect, useState } from 'react'
+
+import { SensorData } from './types/sensor'
+
+function App() {
+  const [sensorData, setSensorData] = useState<SensorData | null>(null)
+
+  useEffect(() => {
+    window.api.onReceiveSensorData((data) => {
+      setSensorData(data)
+    })
+  }, [])
+
   return (
-    <>
-      <div className="creator">Powered by electron-vite</div>
-      <div className="text">
-        Build an Electron app with <span className="react">React</span>
-        &nbsp;and <span className="ts">TypeScript</span>
-      </div>
-      <p className="tip">
-        Please try pressing <code>F12</code> to open the devTool
-      </p>
-      <div className="actions">
-        <div className="action">
-          <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">
-            Documentation
-          </a>
-        </div>
-      </div>
-    </>
+    <div>
+      <p>temperature: {sensorData?.temperature}</p>
+      <p>humidity: {sensorData?.humidity}</p>
+      <p>water: {sensorData?.water}</p>
+    </div>
   )
 }
 
