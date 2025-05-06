@@ -1,0 +1,13 @@
+{
+	"root": true,
+	"extends": ["@my-own-hydroponics/eslint-config/base"],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"project": [
+			"./tsconfig.json",
+			"./tsconfig.node.json",
+			"./tsconfig.web.json",
+		],
+		"sourceType": "module",
+	},
+}

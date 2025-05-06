@@ -24,8 +24,7 @@
 		"serialport": "^13.0.0"
 	},
 	"devDependencies": {
-		"@electron-toolkit/eslint-config-prettier": "^3.0.0",
-		"@electron-toolkit/eslint-config-ts": "^3.0.0",
+		"@my-own-hydroponics/eslint-config": "workspace:*",
 		"@electron-toolkit/tsconfig": "^1.0.1",
 		"@types/node": "^22.14.1",
 		"@types/react": "^19.1.1",
@@ -34,11 +33,6 @@
 		"electron": "^35.1.5",
 		"electron-builder": "^25.1.8",
 		"electron-vite": "^3.1.0",
-		"eslint": "^9.24.0",
-		"eslint-plugin-react": "^7.37.5",
-		"eslint-plugin-react-hooks": "^5.2.0",
-		"eslint-plugin-react-refresh": "^0.4.19",
-		"prettier": "^3.5.3",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"typescript": "^5.8.3",
