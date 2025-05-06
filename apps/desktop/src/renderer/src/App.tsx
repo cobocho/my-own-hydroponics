@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Button } from '@my-own-hydroponics/ui'
 
 import { SensorData } from './types/sensor'
 
@@ -12,10 +13,11 @@ function App() {
   }, [])
 
   return (
-    <div>
-      <p>temperature: {sensorData?.temperature}</p>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <p className="">temperature: {sensorData?.temperature}</p>
       <p>humidity: {sensorData?.humidity}</p>
       <p>water: {sensorData?.water}</p>
+      <Button>Click me</Button>
     </div>
   )
 }
