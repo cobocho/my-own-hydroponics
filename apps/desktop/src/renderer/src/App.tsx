@@ -17,7 +17,41 @@ function App() {
       <p className="">temperature: {sensorData?.temperature}</p>
       <p>humidity: {sensorData?.humidity}</p>
       <p>water: {sensorData?.water}</p>
-      <Button>Click me</Button>
+      <Button
+        onClick={() => {
+          window.api.setLightData({ r: 255, g: 0, b: 0, brightness: 50 })
+        }}
+      >
+        Light Red
+      </Button>
+      <Button
+        onClick={() => {
+          window.api.setLightData({ r: 0, g: 255, b: 0, brightness: 50 })
+        }}
+      >
+        Light Green
+      </Button>
+      <Button
+        onClick={() => {
+          window.api.setLightData({ r: 0, g: 0, b: 255, brightness: 50 })
+        }}
+      >
+        Light Blue
+      </Button>
+      <Button
+        onClick={() => {
+          window.api.setLightData({ r: 255, g: 0, b: 255, brightness: 50 })
+        }}
+      >
+        Light White
+      </Button>
+      <Button
+        onClick={() => {
+          window.api.setLightData({ r: 0, g: 0, b: 0, brightness: 0 })
+        }}
+      >
+        Light Off
+      </Button>
     </div>
   )
 }

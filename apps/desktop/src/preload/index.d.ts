@@ -1,6 +1,6 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
 
-import { SensorData } from '../main/serial'
+import { LightData, SensorData } from '../main/serial'
 
 declare global {
   interface Window {
@@ -8,6 +8,8 @@ declare global {
     api: {
       getSensorData: () => Promise<SensorData>
       onReceiveSensorData: (callback: (data: SensorData) => void) => void
+      getLightData: () => Promise<LightData>
+      setLightData: (data: LightData) => Promise<void>
     }
   }
 }

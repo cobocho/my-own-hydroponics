@@ -2,7 +2,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
-import { SensorData } from '../main/serial'
+import { LightData, SensorData } from '../main/serial'
 
 const api = {
   getSensorData: async () => {
@@ -13,6 +13,13 @@ const api = {
     ipcRenderer.on('receiveSensorData', (_, data: SensorData) => {
       callback(data)
     })
+  },
+  getLightData: async () => {
+    const data = (await ipcRenderer.invoke('getLightData')) as LightData
+    return data
+  },
+  setLightData: async (data: LightData) => {
+    await ipcRenderer.invoke('setLightData', data)
   },
 }
 
